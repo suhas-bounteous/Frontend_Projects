@@ -1,0 +1,158 @@
+<div class="container">
+
+  <h1>My Angular Routing App</h1>
+
+  <nav class="navbar">
+    <a routerLink="/home/home">Home</a>
+    <a routerLink="/frontend/frontend">Frontend</a>
+    <a routerLink="/backend/backend">Backend</a>
+  </nav>  
+
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+
+  <h2>Service Messages</h2>
+
+  <p>{{message1}}</p>
+  <p>{{message2}}</p>
+
+</div>
+
+<h2>Custom Pipe Example</h2>
+
+<p>{{ name.value | greet }}</p>
+
+<h2>Angular Pipes Example</h2>
+
+<p><b>Original Currency:</b> {{currency}}</p>
+
+<p><b>Currency (USD):</b> {{currency | currency:'USD'}}</p>
+
+<p><b>Currency (INR):</b> {{currency | currency:'INR'}}</p>
+
+<p><b>Currency (EUR):</b> {{currency | currency:'EUR'}}</p>
+
+<hr>
+
+<p><b>Current Date:</b> {{currentDate}}</p>
+
+<p><b>Short Date:</b> {{currentDate | date:'shortDate'}}</p>
+
+<p><b>Full Date:</b> {{currentDate | date:'fullDate'}}</p>
+
+<p><b>Custom Date:</b> {{currentDate | date:'dd/MM/yyyy'}}</p>
+
+<hr>
+
+<p><b>Original Text:</b> {{sampleText}}</p>
+
+<p><b>Uppercase:</b> {{sampleText | uppercase}}</p>
+
+<p><b>Lowercase:</b> {{sampleText | lowercase}}</p>
+
+<p><b>Title Case:</b> {{sampleText | titlecase}}</p>
+
+
+<h2>Template Driven Form</h2>
+
+<form #userForm="ngForm" (ngSubmit)="submitTemplateForm(userForm)">
+
+  <!-- Name -->
+  <label>Name:</label>
+  <input
+    type="text"
+    name="name"
+    ngModel
+    required
+    minlength="3"
+    #name="ngModel">
+
+  <div *ngIf="name.touched && name.invalid">
+
+    <small *ngIf="name.errors?.['required']">
+      Name is required
+    </small>
+
+    <small *ngIf="name.errors?.['minlength']">
+      Minimum 3 characters required
+    </small>
+
+  </div>
+
+  <br><br>
+
+  <!-- Email -->
+  <label>Email:</label>
+  <input
+    type="email"
+    name="email"
+    ngModel
+    required
+    email
+    #email="ngModel">
+
+  <div *ngIf="email.touched && email.invalid">
+
+    <small *ngIf="email.errors?.['required']">
+      Email is required
+    </small>
+
+    <small *ngIf="email.errors?.['email']">
+      Enter valid email
+    </small>
+
+  </div>
+
+  <br><br>
+
+  <!-- Submit -->
+  <button type="submit" [disabled]="userForm.invalid">
+    Submit
+  </button>
+
+</form>
+
+
+<h2>Reactive Form</h2>
+
+<form [formGroup]="reactiveForm" (ngSubmit)="submitReactiveForm()">
+
+  <label>Username:</label>
+  <input type="text" formControlName="username">
+
+  <div *ngIf="reactiveForm.get('username')?.touched && reactiveForm.get('username')?.invalid">
+    <small *ngIf="reactiveForm.get('username')?.errors?.['required']">
+      Username is required
+    </small>
+
+    <small *ngIf="reactiveForm.get('username')?.errors?.['minlength']">
+      Minimum 3 characters required
+    </small>
+  </div>
+
+  <br>
+
+  <label>Email:</label>
+  <input type="email" formControlName="email">
+
+  <div *ngIf="reactiveForm.get('email')?.touched && reactiveForm.get('email')?.invalid">
+    <small>Email must be valid</small>
+  </div>
+
+  <br>
+
+  <label>Password:</label>
+  <input type="password" formControlName="password">
+
+  <div *ngIf="reactiveForm.get('password')?.touched && reactiveForm.get('password')?.invalid">
+    <small>Password must be at least 6 characters</small>
+  </div>
+
+  <br>
+
+  <button type="submit" [disabled]="reactiveForm.invalid">
+    Submit
+  </button>
+
+</form>
